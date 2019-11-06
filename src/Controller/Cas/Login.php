@@ -24,14 +24,10 @@ class Login extends AbstractController
      *
      * @return \Psr\Http\Message\ResponseInterface|\Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    public function __invoke(
-        Request $request,
-        CasInterface $cas
-    ) {
+    public function __invoke(Request $request, CasInterface $cas)
+    {
         $parameters = [
             'renew' => null !== $this->getUser(),
-            'service' => $request->headers->get('referer') ??
-            $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
 
         if (null !== $response = $cas->login($parameters)) {
