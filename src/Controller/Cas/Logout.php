@@ -30,18 +30,6 @@ class Logout extends AbstractController
     ) {
         $parameters = [];
 
-        $service = $cas->getProperties()['protocol']['logout']['default_parameters']['service'] ?? null;
-
-        if (null !== $service) {
-            $parameters += [
-                'service' => $this->generateUrl(
-                    $service,
-                    [],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                ),
-            ];
-        }
-
         if (null !== $response = $cas->logout($parameters)) {
             $tokenStorage->setToken();
 
