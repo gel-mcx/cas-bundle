@@ -92,10 +92,6 @@ cas:
 
 ```yaml
 security:
-    role_hierarchy:
-        ROLE_DEVELOPER: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_ADMIN: [ROLE_USER]
-        ROLE_USER: []
     providers:
         cas:
             id: cas.userprovider
@@ -104,14 +100,13 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            provider: cas.userprovider
             anonymous: true
+            provider: cas.userprovider
             switch_user: true
             pattern: ^/
             guard:
                 authenticators:
                     - cas.guardauthenticator
     access_control:
-        - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, role: ROLE_USER }
+        - { path: ^/api, role: ROLE_CAS_AUTHENTICATED }
 ```
