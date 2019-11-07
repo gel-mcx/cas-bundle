@@ -37,38 +37,11 @@ final class Symfony implements PropertiesInterface
     }
 
     /**
-     * Transform Symfony routes into absolute URLs.
-     *
-     * @param array $properties
-     *   The properties.
-     *
-     * @return array
-     *   The updated properties.
+     * {@inheritdoc}
      */
-    private function routeToUrl(array $properties): array
+    public function all(): array
     {
-        foreach ($properties['protocol'] as $key => $protocol) {
-            if (false === isset($protocol['default_parameters']['service'])) {
-                continue;
-            }
-
-            $service = $protocol['default_parameters']['service'];
-
-            if (false === filter_var($service, FILTER_VALIDATE_URL)) {
-                $service = $this
-                    ->router
-                    ->generate(
-                        $service,
-                        [],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    );
-
-                $properties['protocol'][$key]['default_parameters']['service'] = $service;
-            }
-
-        }
-
-        return $properties;
+        return $this->cas->all();
     }
 
     /**
@@ -106,5 +79,40 @@ final class Symfony implements PropertiesInterface
     public function offsetUnset($offset)
     {
         $this->cas->offsetUnset($offset);
+    }
+
+    /**
+     * Transform Symfony routes into absolute URLs.
+     *
+     * @param array $properties
+     *   The properties.
+     *
+     * @return array
+     *   The updated properties.
+     */
+    private function routeToUrl(array $properties): array
+    {
+        foreach ($properties['protocol'] as $key => $protocol) {
+            if (false === isset($protocol['default_parameters']['service'])) {
+                continue;
+            }
+
+            $service = $protocol['default_parameters']['service'];
+
+            if (false === filter_var($service, FILTER_VALIDATE_URL)) {
+                $service = $this
+                    ->router
+                    ->generate(
+                        $service,
+                        [],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    );
+
+                $properties['protocol'][$key]['default_parameters']['service'] = $service;
+            }
+
+        }
+
+        return $properties;
     }
 }
