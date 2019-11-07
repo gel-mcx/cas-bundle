@@ -3,7 +3,7 @@ services:
         class: drupol\psrcas\Cas
         arguments:
             $serverRequest: '@cas.psrrequest'
-            $properties: '%cas%'
+            $properties: '@cas.configuration'
             $client: '@psr18.http_client'
             $uriFactory: '@nyholm.psr7.psr17_factory'
             $responseFactory: '@nyholm.psr7.psr17_factory'
@@ -13,6 +13,12 @@ services:
             $logger: '@logger'
 
     drupol\psrcas\CasInterface: '@cas'
+
+    cas.configuration:
+        class: drupol\CasBundle\Configuration\Symfony
+        arguments:
+            $properties: '%cas%'
+            $router: '@router'
 
     cas.userprovider:
         class: drupol\CasBundle\Security\Core\User\CasUserProvider
@@ -37,7 +43,6 @@ services:
             $cas: '@cas'
             $uriFactory: '@nyholm.psr7.psr17_factory'
             $httpFoundationFactory: '@cas.httpfoundationfactory'
-            $router: '@router'
 
     cas.request:
         class: Symfony\Component\HttpFoundation\RequestStack
@@ -47,8 +52,4 @@ services:
         class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
         factory: [ '@cas.psrhttpfactory', createRequest ]
         arguments: [ '@cas.request']
-
-    drupol\CasBundle\Controller\:
-        resource: '../../src/Controller'
-        tags: ['controller.service_arguments']
 

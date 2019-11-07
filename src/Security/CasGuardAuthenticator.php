@@ -6,6 +6,7 @@ namespace drupol\CasBundle\Security;
 
 use drupol\CasBundle\Security\Core\User\CasUserProviderInterface;
 use drupol\psrcas\CasInterface;
+use drupol\psrcas\Introspection\Contract\ServiceValidate;
 use drupol\psrcas\Introspection\Introspector;
 use drupol\psrcas\Utils\Uri;
 use InvalidArgumentException;
@@ -13,8 +14,6 @@ use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,11 +39,6 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
     private $httpFoundationFactory;
 
     /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    private $router;
-
-    /**
      * @var \Psr\Http\Message\UriFactoryInterface
      */
     private $uriFactory;
@@ -55,18 +49,15 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      * @param \drupol\psrcas\CasInterface $cas
      * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
      * @param \Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface $httpFoundationFactory
-     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
         CasInterface $cas,
         UriFactoryInterface $uriFactory,
-        HttpFoundationFactoryInterface $httpFoundationFactory,
-        RouterInterface $router
+        HttpFoundationFactoryInterface $httpFoundationFactory
     ) {
         $this->cas = $cas;
         $this->uriFactory = $uriFactory;
         $this->httpFoundationFactory = $httpFoundationFactory;
-        $this->router = $router;
     }
 
     /**
@@ -75,9 +66,13 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
     public function checkCredentials($response, UserInterface $user)
     {
         try {
-            Introspector::detect($response);
+            $introspect = Introspector::detect($response);
         } catch (InvalidArgumentException $exception) {
             throw new AuthenticationException($exception->getMessage());
+        }
+
+        if (false === ($introspect instanceof ServiceValidate)) {
+            throw new AuthenticationException('Failure in the returned response', ['response' => (string) $response->getBody()]);
         }
 
         return true;
@@ -88,36 +83,9 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function getCredentials(Request $request)
     {
-        $ticket = $request->query->get('ticket');
-        $properties = $this->cas->getProperties();
-
-        $parameters = [];
-
-        if (0 === mb_strpos($ticket, CasInterface::TICKET_TYPE_SERVICE)) {
-            $parameters['renew'] = 'true' === $request->query->get('renew');
-
-            // Modify the parameter pgtUrl because it must be converted to an URL.
-            $pgtUrl = $properties['protocol']['serviceValidate']['default_parameters']['pgtUrl'] ?? null;
-
-            if (null !== $pgtUrl) {
-                $parameters['pgtUrl'] = $this
-                    ->router
-                    ->generate(
-                        $pgtUrl,
-                        [],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    );
-            }
-        }
-
-        if (0 === mb_strpos($ticket, CasInterface::TICKET_TYPE_PROXY)) {
-            // No JSON format for /proxyValidate
-            $parameters['format'] = 'XML';
-        }
-
-        $parameters += [
+        $parameters = [
             'service' => $request->getUri(),
-            'ticket' => $ticket,
+            'ticket' => $request->query->get('ticket'),
         ];
 
         $response = $this
@@ -195,7 +163,9 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
         return $this
             ->httpFoundationFactory
             ->createResponse(
-                $this->cas->logout()
+                $this
+                    ->cas
+                    ->logout()
             );
     }
 
@@ -204,29 +174,12 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function start(Request $request, ?AuthenticationException $authException = null)
     {
-        $parameters = [
-            'service' => $request->headers->get('referer', $request->getUri()),
-        ];
-
-        // Modify the parameter pgtUrl because it must be converted to an URL.
-        $service = $properties['protocol']['login']['default_parameters']['service'] ?? null;
-
-        if (null !== $service) {
-            $parameters['service'] = $this
-                ->router
-                ->generate(
-                    $service,
-                    [],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                );
-        }
-
         return $this
             ->httpFoundationFactory
             ->createResponse(
                 $this
                     ->cas
-                    ->login($parameters)
+                    ->login()
             );
     }
 
