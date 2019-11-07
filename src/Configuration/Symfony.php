@@ -90,27 +90,45 @@ final class Symfony implements PropertiesInterface
      * @return array
      *   The updated properties.
      */
-    private function routeToUrl(array $properties): array
+    private function routeToUrl(array $properties): array {
+        $properties = $this->updateDefaultParameterRouteToUrl(
+            $properties,
+            'pgtUrl'
+        );
+        $properties = $this->updateDefaultParameterRouteToUrl(
+            $properties,
+            'service'
+        );
+
+        return $properties;
+    }
+
+    /**
+     * @param array $properties
+     * @param string $key
+     *
+     * @return array
+     */
+    private function updateDefaultParameterRouteToUrl(array $properties, string $key): array
     {
-        foreach ($properties['protocol'] as $key => $protocol) {
-            if (false === isset($protocol['default_parameters']['service'])) {
+        foreach ($properties['protocol'] as $protocolKey => $protocol) {
+            if (false === isset($protocol['default_parameters'][$key])) {
                 continue;
             }
 
-            $service = $protocol['default_parameters']['service'];
+            $route = $protocol['default_parameters'][$key];
 
-            if (false === filter_var($service, FILTER_VALIDATE_URL)) {
-                $service = $this
+            if (false === filter_var($route, FILTER_VALIDATE_URL)) {
+                $route = $this
                     ->router
                     ->generate(
-                        $service,
+                        $route,
                         [],
                         UrlGeneratorInterface::ABSOLUTE_URL
                     );
 
-                $properties['protocol'][$key]['default_parameters']['service'] = $service;
+                $properties['protocol'][$protocolKey]['default_parameters'][$key] = $route;
             }
-
         }
 
         return $properties;
