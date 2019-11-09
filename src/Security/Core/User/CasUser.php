@@ -62,6 +62,20 @@ final class CasUser implements CasUserInterface
         return $this->getStorage()['attributes'][$key] ?? $default;
     }
 
+    /**
+     * @param $key
+     * @param null $default
+     *
+     * @return string|null
+     */
+    public function get($key, $default = null): ?string
+    {
+        return $this->getStorage()[$key] ?? $default;
+    }
+
+    /**
+     * @return array
+     */
     public function getAttributes(): array
     {
         return $this->getStorage()['attributes'] ?? [];
@@ -175,7 +189,7 @@ final class CasUser implements CasUserInterface
      */
     public function getPgt(): ?string
     {
-        return $this->getAttribute('proxyGrantingTicket');
+        return $this->get('proxyGrantingTicket');
     }
 
     /**
