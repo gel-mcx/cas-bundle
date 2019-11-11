@@ -83,14 +83,9 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function getCredentials(Request $request)
     {
-        $parameters = [
-            'service' => $request->getUri(),
-            'ticket' => $request->query->get('ticket'),
-        ];
-
         $response = $this
             ->cas
-            ->requestTicketValidation($parameters);
+            ->requestTicketValidation();
 
         if (null === $response) {
             throw new AuthenticationException('Unable to authenticate the user with such service ticket.');
@@ -137,11 +132,9 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if (false === $request->query->has('ticket')) {
+        if (false === $ticket = $request->query->get('ticket', false)) {
             return;
         }
-
-        $ticket = $request->query->get('ticket');
 
         if (0 === mb_strpos($ticket, CasInterface::TICKET_TYPE_SERVICE)) {
             return new RedirectResponse(
