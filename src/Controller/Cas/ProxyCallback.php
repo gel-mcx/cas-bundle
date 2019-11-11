@@ -22,6 +22,6 @@ class ProxyCallback extends AbstractController
      */
     public function proxyCallbackHandler(CasInterface $casProtocol)
     {
-        return $casProtocol->requestProxyCallback();
+        return $casProtocol->handleProxyCallback();
     }
 }
