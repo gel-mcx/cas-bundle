@@ -132,11 +132,7 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if (false === $ticket = $request->query->get('ticket', false)) {
-            return;
-        }
-
-        if (0 === mb_strpos($ticket, CasInterface::TICKET_TYPE_SERVICE)) {
+        if ($request->query->has('ticket')) {
             return new RedirectResponse(
                 (string) Uri::removeParams(
                     $this->uriFactory->createUri(
