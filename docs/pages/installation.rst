@@ -21,11 +21,20 @@ Add the line `drupol\\CasBundle\\CasBundle::class => ['all' => true],` to `confi
 Step 3
 ~~~~~~
 
-Recursively copy the content of the `Resources` directory in `config/` folder.
+Recursively copy the content of the `Resources/config` directory in `config/` folder.
 
-See more on :ref:`configuration` page.
+.. code-block:: bash
+
+    cp -ar vendor/drupol/cas-bundle/Resources/config/* config/
 
 Step 4
+~~~~~~
+
+Create a configuration file `cas.yaml` in `config/packages`:
+
+See more on the dedicated :ref:`configuration` page.
+
+Step 5
 ~~~~~~
 
 Register new firewall for CAS authentication, e.g.
