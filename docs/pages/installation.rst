@@ -80,7 +80,7 @@ Step 5
 
 Import the bundle routes in your application:
 
-Create `cas.yaml` in `config/routes` and add:
+Create `cas_bundle.yaml` in `config/routes` and add:
 
 .. code:: yaml
 
