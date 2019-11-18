@@ -8,7 +8,10 @@
         "ext-json": "*",
         "ext-simplexml": "*",
         "drupol/psrcas": "dev-master",
+        "nyholm/psr7": "^1.2.0",
+        "symfony/cache": "^4.3.8",
         "symfony/framework-bundle": "^4",
+        "symfony/http-client": "^4.3.8",
         "symfony/psr-http-message-bridge": "^1.2",
         "symfony/security-bundle": "^4"
     },
