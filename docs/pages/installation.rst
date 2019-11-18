@@ -104,7 +104,7 @@ Example of configuration:
                 security: false
             main:
                 anonymous: true
-                provider: cas.userprovider
+                provider: cas
                 switch_user: true
                 pattern: ^/
                 guard:
