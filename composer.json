@@ -15,6 +15,13 @@
     "require-dev": {
         "drupol/php-conventions": "^1"
     },
+    "suggest": {
+        "monolog/monolog": "For a logger implementation (PSR-3).",
+        "nyholm/psr7": "For a super lightweight PSR-7/17 implementation",
+        "nyholm/psr7-server": "For a PSR-7 implementation of Server Requests.",
+        "symfony/cache": "For a cache implementation (PSR-6).",
+        "symfony/http-client": "For an HTTP client implementation (PSR-18)."
+    },
     "autoload": {
         "psr-4": {
             "drupol\\CasBundle\\": "src/"
