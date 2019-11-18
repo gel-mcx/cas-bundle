@@ -53,3 +53,6 @@ services:
         factory: [ '@cas.psrhttpfactory', createRequest ]
         arguments: [ '@cas.request']
 
+    drupol\CasBundle\Controller\:
+        resource: '../../src/Controller/'
+        tags: ['controller.service_arguments']

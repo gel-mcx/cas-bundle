@@ -80,18 +80,10 @@ Step 5
 
 Import the bundle routes in your application:
 
-Edit `annotations.yaml` and add:
+Create `cas.yaml` in `config/routes` and add:
 
 .. code:: yaml
 
     casbundle:
         resource: '@CasBundle/Controller/'
         type:     annotation
-
-Edit `services.yaml` and add:
-
-.. code:: yaml
-
-    drupol\CasBundle\Controller\:
-        resource: '@CasBundle/Controller/'
-        tags: ['controller.service_arguments']
