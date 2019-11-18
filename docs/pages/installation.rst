@@ -1,7 +1,7 @@
 Installation
 ============
 
-This package does not yet have Symfony Flex recipe. Installation steps must be done manually.
+This package does not yet have a Symfony Flex recipe. Installation steps must be done manually.
 
 
 Step 1
@@ -21,24 +21,14 @@ Add the line `drupol\CasBundle\CasBundle::class => ['all' => true],` to `config/
 Step 3
 ~~~~~~
 
-Create file `cas.yaml` file in `config/packages/` folder and populate it.
+Recursively copy the content of the `Resources` directory in `config/` folder.
 
 See more on :ref:`configuration` page.
 
 Step 4
 ~~~~~~
 
-Edit `security.yaml` file in `config/packages/` folder.
-
-Add new user provider, e.g.
-
-.. code:: yaml
-
-    providers:
-        cas:
-            id: cas.userprovider
-
-and register new firewall, e.g.
+Register new firewall for CAS authentication, e.g.
 
 .. code:: yaml
 
@@ -54,9 +44,6 @@ Example of configuration:
 .. code:: yaml
 
     security:
-        providers:
-            cas:
-                id: cas.userprovider
         firewalls:
             dev:
                 pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -74,16 +61,3 @@ Example of configuration:
 
 
 .. _Composer: https://getcomposer.org
-
-Step 5
-~~~~~~
-
-Import the bundle routes in your application:
-
-Create `cas_bundle.yaml` in `config/routes` and add:
-
-.. code:: yaml
-
-    casbundle:
-        resource: '@CasBundle/Controller/'
-        type:     annotation
