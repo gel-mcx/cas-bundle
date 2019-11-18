@@ -23,48 +23,7 @@ Step 3
 
 Create file `cas.yaml` file in `config/packages/` folder and populate it.
 
-Example of configuration:
-
-.. code:: yaml
-
-    cas:
-      base_url: https://localhost:8443/cas
-      protocol:
-        login:
-          path: /login
-          allowed_parameters:
-            - service
-            - renew
-            - gateway
-        serviceValidate:
-          allowed_parameters:
-            - format
-            - pgtUrl
-            - renew
-            - service
-          default_parameters:
-            format: JSON
-            pgtUrl: cas_bundle_proxy_callback
-          path: /p3/serviceValidate
-        logout:
-          allowed_parameters:
-            - service
-          path: /logout
-        proxy:
-          path: /proxy
-          allowed_parameters:
-            - targetService
-            - pgt
-        proxyValidate:
-          path: /p3/proxyValidate
-          allowed_parameters:
-            - format
-            - pgtUrl
-            - service
-            - ticket
-          default_parameters:
-            format: XML
-            pgtUrl: cas_bundle_proxy_callback
+See more on :ref:`configuration` page.
 
 Step 4
 ~~~~~~
@@ -116,3 +75,23 @@ Example of configuration:
 
 .. _Composer: https://getcomposer.org
 
+Step 5
+~~~~~~
+
+Import the bundle path in your application:
+
+Edit `annotations.yaml` and add:
+
+.. code:: yaml
+
+    casbundle:
+        resource: '@CasBundle/Controller/'
+        type:     annotation
+
+Edit `services.yaml` and add:
+
+.. code:: yaml
+
+    drupol\CasBundle\Controller\:
+        resource: '@CasBundle/Controller/'
+        tags: ['controller.service_arguments']
