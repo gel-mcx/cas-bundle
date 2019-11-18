@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace drupol\CasBundle\Controller\Cas;
+namespace drupol\CasBundle\Controller\CasBundle;
 
 use drupol\psrcas\CasInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * Class Logout.
  */
-class Logout extends AbstractController
+final class Logout extends AbstractController
 {
     /**
      * @Route("/cas/logout", name="cas_bundle_logout")

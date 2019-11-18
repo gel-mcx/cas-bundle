@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace drupol\CasBundle\Controller\Cas;
+namespace drupol\CasBundle\Controller\CasBundle;
 
 use drupol\psrcas\CasInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class Login.
  */
-class Login extends AbstractController
+final class Login extends AbstractController
 {
     /**
      * @Route("/cas/login", name="cas_bundle_login")
