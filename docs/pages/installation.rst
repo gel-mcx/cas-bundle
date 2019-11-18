@@ -16,7 +16,7 @@ The easiest way to install it is through Composer_
 Step 2
 ~~~~~~
 
-Add the line `drupol\CasBundle\CasBundle::class => ['all' => true],` to `config/bundles.php` array.
+Add the line `drupol\\CasBundle\\CasBundle::class => ['all' => true],` to `config/bundles.php` array.
 
 Step 3
 ~~~~~~
