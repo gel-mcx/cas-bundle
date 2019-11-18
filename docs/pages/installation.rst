@@ -78,7 +78,7 @@ Example of configuration:
 Step 5
 ~~~~~~
 
-Import the bundle path in your application:
+Import the bundle routes in your application:
 
 Edit `annotations.yaml` and add:
 
