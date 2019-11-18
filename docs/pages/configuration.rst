@@ -6,6 +6,7 @@ Hereunder an example of configuration for CAS Bundle.
 .. tip:: Based on this configuration, the behavior of the bundle can change.
 
 .. code:: yaml
+
    base_url: https://casserver.herokuapp.com/cas
    protocol:
      login:

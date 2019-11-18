@@ -26,6 +26,7 @@ Create file `cas.yaml` file in `config/packages/` folder and populate it.
 Example of configuration:
 
 .. code:: yaml
+
     cas:
       base_url: https://localhost:8443/cas
       protocol:
@@ -81,6 +82,7 @@ Add new user provider, e.g.
 and register new firewall, e.g.
 
 .. code:: yaml
+
     firewalls:
         main:
             guard:
@@ -91,6 +93,7 @@ and register new firewall, e.g.
 Example of configuration:
 
 .. code:: yaml
+
     security:
         providers:
             cas:
