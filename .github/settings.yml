@@ -39,7 +39,7 @@ repository:
     allow_squash_merge: false
     default_branch: master
     description: "CAS Bundle, a standard Symfony bundle for authentication using CAS protocol."
-    homepage: https://not-a-number.io/cas-bundle
+    homepage: https://cas-bundle.readthedocs.io/
     topics: authentication,cas,psr,single-sign-on
     has_downloads: true
     has_issues: true
