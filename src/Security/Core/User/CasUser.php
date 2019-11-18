@@ -42,6 +42,17 @@ final class CasUser implements CasUserInterface
         // null
     }
 
+    /**
+     * @param string $key
+     * @param null $default
+     *
+     * @return string|null
+     */
+    public function get(string $key, $default = null): ?string
+    {
+        return $this->getStorage()[$key] ?? $default;
+    }
+
     public function getAssuranceLevel()
     {
         return $this->getAttribute('assuranceLevel');
@@ -60,17 +71,6 @@ final class CasUser implements CasUserInterface
     public function getAttribute($key, $default = null)
     {
         return $this->getStorage()['attributes'][$key] ?? $default;
-    }
-
-    /**
-     * @param $key
-     * @param null $default
-     *
-     * @return string|null
-     */
-    public function get($key, $default = null): ?string
-    {
-        return $this->getStorage()[$key] ?? $default;
     }
 
     /**

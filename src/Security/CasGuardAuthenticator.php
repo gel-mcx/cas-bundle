@@ -72,7 +72,9 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
         }
 
         if (false === ($introspect instanceof ServiceValidate)) {
-            throw new AuthenticationException('Failure in the returned response', ['response' => (string) $response->getBody()]);
+            throw new AuthenticationException(
+                'Failure in the returned response'
+            );
         }
 
         return true;

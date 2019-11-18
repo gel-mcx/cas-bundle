@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace drupol\CasBundle\Configuration;
 
+use drupol\psrcas\Configuration\Properties as PsrCasConfiguration;
 use drupol\psrcas\Configuration\PropertiesInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use drupol\psrcas\Configuration\Properties as PsrCasConfiguration;
+
+use const FILTER_VALIDATE_URL;
 
 /**
  * Class Symfony.
@@ -90,17 +92,17 @@ final class Symfony implements PropertiesInterface
      * @return array
      *   The updated properties.
      */
-    private function routeToUrl(array $properties): array {
+    private function routeToUrl(array $properties): array
+    {
         $properties = $this->updateDefaultParameterRouteToUrl(
             $properties,
             'pgtUrl'
         );
-        $properties = $this->updateDefaultParameterRouteToUrl(
+
+        return $this->updateDefaultParameterRouteToUrl(
             $properties,
             'service'
         );
-
-        return $properties;
     }
 
     /**
