@@ -54,5 +54,5 @@ services:
         arguments: [ '@cas.request']
 
     drupol\CasBundle\Controller\:
-        resource: '../../src/Controller/'
+        resource: '@CasBundle/Controller/'
         tags: ['controller.service_arguments']
