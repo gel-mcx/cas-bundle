@@ -16,10 +16,10 @@ PHP Extensions
 Packages
 --------
 
-In order to get the PSR CAS library running, you will require some dependencies.
+In order to get the CAS bundle working, you will require some dependencies.
 
-To give a maximum freedom to the users using PSR CAS, each required dependencies is a well defined standardized PHP
-class.
+To give a maximum freedom to the users using, each required dependencies is a well
+defined standardized PHP class.
 
 +------------------+-----------+---------------------------------+------------------------+
 | Dependency       | PSR       | Implementations                 | Example package        |
@@ -37,15 +37,6 @@ class.
 
 You are free to use any package you want, as long as they are implementing the proper requirement.
 
-PSR CAS only returns standardized HTTP responses, you will need to emit the response back to the client.
-
-You may use custom code for that, but you can also use any of the following packages for this
-
--  `zendframework/zend-httphandlerrunner`_
--  `http-interop/response-sender`_
-
-.. _zendframework/zend-httphandlerrunner: https://packagist.org/packages/zendframework/zend-httphandlerrunner
-.. _http-interop/response-sender: https://packagist.org/packages/http-interop/response-sender
 .. _monolog/monolog: https://packagist.org/packages/monolog/monolog
 .. _nyholm/psr7-server: https://packagist.org/packages/nyholm/psr7-server
 .. _nyholm/psr7: https://packagist.org/packages/nyholm/psr7
