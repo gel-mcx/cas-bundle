@@ -8,9 +8,9 @@
         "ext-json": "*",
         "ext-simplexml": "*",
         "drupol/psrcas": "dev-master",
-        "symfony/framework-bundle": "^4",
+        "symfony/framework-bundle": "^4.3",
         "symfony/psr-http-message-bridge": "^1.2",
-        "symfony/security-bundle": "^4"
+        "symfony/security-bundle": "^4.3"
     },
     "require-dev": {
         "drupol/php-conventions": "^1"
