@@ -9,7 +9,8 @@
         "ext-simplexml": "*",
         "drupol/psrcas": "dev-master",
         "symfony/framework-bundle": "^4",
-        "symfony/psr-http-message-bridge": "^1.2"
+        "symfony/psr-http-message-bridge": "^1.2",
+        "symfony/security-bundle": "^4"
     },
     "require-dev": {
         "drupol/php-conventions": "^1"
