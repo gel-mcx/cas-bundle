@@ -29,152 +29,33 @@ final class CasUser implements CasUserInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString()
-    {
-        return (string) $this->getUsername();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function eraseCredentials(): void
     {
         // null
     }
 
     /**
-     * @param string $key
-     * @param null $default
-     *
-     * @return string|null
+     * {@inheritdoc}
      */
-    public function get(string $key, $default = null): ?string
+    public function get(string $key, $default = null)
     {
         return $this->getStorage()[$key] ?? $default;
     }
 
-    public function getAssuranceLevel()
-    {
-        return $this->getAttribute('assuranceLevel');
-    }
-
     /**
-     * Get a value.
-     *
-     * @param string $key
-     *   The key.
-     * @param null $default
-     *
-     * @return mixed
-     *   The value.
+     * {@inheritdoc}
      */
-    public function getAttribute($key, $default = null)
+    public function getAttribute(string $key, $default = null)
     {
         return $this->getStorage()['attributes'][$key] ?? $default;
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getAttributes(): array
     {
-        return $this->getStorage()['attributes'] ?? [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDepartmentNumber()
-    {
-        return $this->getAttribute('departmentNumber');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDomain()
-    {
-        return $this->getAttribute('domain');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDomainUsername()
-    {
-        return $this->getAttribute('domainUsername');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmail()
-    {
-        return $this->getAttribute('email');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmployeeNumber()
-    {
-        return $this->getAttribute('employeeNumber');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmployeeType()
-    {
-        return $this->getAttribute('employeeType');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFirstName()
-    {
-        return $this->getAttribute('firstName');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getGroups()
-    {
-        return $this->getAttribute('groups');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLastName()
-    {
-        return $this->getAttribute('lastName');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLocale()
-    {
-        return $this->getAttribute('locale');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLoginDate()
-    {
-        return $this->getAttribute('loginDate');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOrgId()
-    {
-        return $this->getAttribute('orgId');
+        return $this->get('attributes', []);
     }
 
     /**
@@ -197,15 +78,7 @@ final class CasUser implements CasUserInterface
      */
     public function getRoles()
     {
-        $default = ['ROLE_CAS_AUTHENTICATED'];
-
-        if ([] !== $roles = $this->getGroups()) {
-            if (isset($roles['group'])) {
-                return array_merge($roles['group'], $default);
-            }
-        }
-
-        return $default;
+        return ['ROLE_CAS_AUTHENTICATED'];
     }
 
     /**
@@ -218,57 +91,9 @@ final class CasUser implements CasUserInterface
     /**
      * {@inheritdoc}
      */
-    public function getSso()
+    public function getUser(): string
     {
-        return $this->getAttribute('sso');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStrengths()
-    {
-        return $this->getAttribute('strengths');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTelephoneNumber()
-    {
-        return $this->getAttribute('telephoneNumber');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTeleworkingPriority()
-    {
-        return $this->getAttribute('teleworkingPriority');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTicketType()
-    {
-        return $this->getAttribute('ticketType');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUid()
-    {
-        return $this->getAttribute('uid');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUser()
-    {
-        return $this->getStorage()['user'];
+        return $this->get('user');
     }
 
     /**

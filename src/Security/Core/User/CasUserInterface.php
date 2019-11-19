@@ -6,49 +6,39 @@ namespace drupol\CasBundle\Security\Core\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Interface CasUserInterface.
+ */
 interface CasUserInterface extends UserInterface
 {
-    public function getAssuranceLevel();
+    /**
+     * @param string $key
+     * @param null $default
+     *
+     * @return string|null
+     */
+    public function get(string $key, $default = null);
 
+    /**
+     * @param string $key
+     * @param null $default
+     *
+     * @return mixed
+     */
+    public function getAttribute(string $key, $default = null);
+
+    /**
+     * @return array
+     */
     public function getAttributes(): array;
 
-    public function getDepartmentNumber();
-
-    public function getDomain();
-
-    public function getDomainUsername();
-
-    public function getEmail();
-
-    public function getEmployeeNumber();
-
-    public function getEmployeeType();
-
-    public function getFirstName();
-
-    public function getGroups();
-
-    public function getLastName();
-
-    public function getLocale();
-
-    public function getLoginDate();
-
-    public function getOrgId();
-
+    /**
+     * @return string|null
+     */
     public function getPgt(): ?string;
 
-    public function getSso();
-
-    public function getStrengths();
-
-    public function getTelephoneNumber();
-
-    public function getTeleworkingPriority();
-
-    public function getTicketType();
-
-    public function getUid();
-
-    public function getUser();
+    /**
+     * @return string
+     */
+    public function getUser(): string;
 }
