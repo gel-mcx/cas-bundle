@@ -87,12 +87,12 @@ E.g: If you're using the default `symfony/http-client`_, you might need to add i
 
 .. code:: yaml
 
-framework:
-    # ... Default stuff here
-    http_client:
-        default_options:
-            verify_peer: false
-            verify_host: false
+    framework:
+        # ... Default stuff here
+        http_client:
+            default_options:
+                verify_peer: false
+                verify_host: false
 
 .. _Composer: https://getcomposer.org
 .. _symfony/http-client: https://packagist.org/packages/symfony/http-client
