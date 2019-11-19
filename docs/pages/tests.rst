@@ -1,12 +1,6 @@
 Tests, code quality and code style
 ==================================
 
-Every time changes are introduced into the library, `Travis CI`_ and `Github Actions`_
-run the tests written with `PHPSpec`_.
-
-`PHPInfection`_ is also triggered used to ensure that your code is properly
-tested.
-
 The code style is based on `PSR-12`_ plus a set of custom rules.
 Find more about the code style in use in the package `drupol/php-conventions`_.
 
@@ -30,7 +24,7 @@ will check your code
 
 .. code-block:: bash
 
-    $ ./vendor/bin/grumphp run
+    ./vendor/bin/grumphp run
     GrumPHP is sniffing your code!
     Running task  1/10: Composer... ✔
     Running task  2/10: ComposerNormalize... ✔
@@ -42,8 +36,6 @@ will check your code
     Running task  8/10: PhpCsFixerV2... ✔
     Running task  9/10: Phpcs... ✔
     Running task 10/10: PhpStan... ✔
-    $
-
 
 .. _PSR-12: https://www.php-fig.org/psr/psr-12/
 .. _drupol/php-conventions: https://github.com/drupol/php-conventions

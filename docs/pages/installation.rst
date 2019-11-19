@@ -1,8 +1,9 @@
+.. _installation:
+
 Installation
 ============
 
 This package does not yet have a Symfony Flex recipe. Installation steps must be done manually.
-
 
 Step 1
 ~~~~~~
@@ -21,7 +22,7 @@ Add the line `drupol\\CasBundle\\CasBundle::class => ['all' => true],` to `confi
 Step 3
 ~~~~~~
 
-Recursively copy the content of the `Resources/config` directory in `config/` folder.
+Recursively copy the content of the `Resources/config` folder in `config/` folder.
 
 .. code-block:: bash
 
@@ -68,5 +69,30 @@ Example of configuration:
         access_control:
             - { path: ^/api, role: ROLE_CAS_AUTHENTICATED }
 
+Step 6
+~~~~~~
+
+The CAS protocol requires HTTPS on both side (client and server) in order
+to communicate.
+
+While it is not possible to configure the behavior of the CAS server, it is
+possible to configure the HTTP client in use in this bundle in order to relax
+the requirement and to disable SSL checks when communicating from the client
+to the server.
+
+.. warning:: Keep in mind that the following is only for development setup, not for production.
+
+E.g: If you're using the default `symfony/http-client`_, you might need to add in
+`config/framework.yaml`:
+
+.. code:: yaml
+
+framework:
+    # ... Default stuff here
+    http_client:
+        default_options:
+            verify_peer: false
+            verify_host: false
 
 .. _Composer: https://getcomposer.org
+.. _symfony/http-client: https://packagist.org/packages/symfony/http-client
