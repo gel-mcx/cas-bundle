@@ -14,6 +14,7 @@ use Psr\Http\Message\UriFactoryInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,20 +45,28 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
     private $uriFactory;
 
     /**
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
      * CasGuardAuthenticator constructor.
      *
      * @param \drupol\psrcas\CasInterface $cas
      * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
      * @param \Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface $httpFoundationFactory
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
     public function __construct(
         CasInterface $cas,
         UriFactoryInterface $uriFactory,
-        HttpFoundationFactoryInterface $httpFoundationFactory
+        HttpFoundationFactoryInterface $httpFoundationFactory,
+        TokenStorageInterface $tokenStorage
     ) {
         $this->cas = $cas;
         $this->uriFactory = $uriFactory;
         $this->httpFoundationFactory = $httpFoundationFactory;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -177,7 +186,7 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
      */
     public function supports(Request $request)
     {
-        if (null !== $request->getUser()) {
+        if (null !== $this->tokenStorage->getToken()) {
             return false;
         }
 
