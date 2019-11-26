@@ -8,7 +8,6 @@ use drupol\psrcas\CasInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class Login.
@@ -16,8 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 final class Login extends AbstractController
 {
     /**
-     * @Route("/cas/login", name="cas_bundle_login")
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \drupol\psrcas\CasInterface $cas
      *
