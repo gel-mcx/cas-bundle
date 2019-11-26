@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace drupol\CasBundle\Controller\CasBundle;
 
 use drupol\psrcas\CasInterface;
+use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -17,19 +18,19 @@ final class Logout extends AbstractController
     /**
      * @param \drupol\psrcas\CasInterface $cas
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
+     * @param \Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface $httpFoundationFactory
      *
-     * @return \Psr\Http\Message\ResponseInterface|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function __invoke(
         CasInterface $cas,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        HttpFoundationFactoryInterface $httpFoundationFactory
     ) {
-        $parameters = [];
-
-        if (null !== $response = $cas->logout($parameters)) {
+        if (null !== $response = $cas->logout()) {
             $tokenStorage->setToken();
 
-            return $response;
+            return $httpFoundationFactory->createResponse($response);
         }
 
         return new RedirectResponse('/');

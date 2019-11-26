@@ -40,14 +40,14 @@ class CasGuardAuthenticator extends AbstractGuardAuthenticator implements Logout
     private $httpFoundationFactory;
 
     /**
-     * @var \Psr\Http\Message\UriFactoryInterface
-     */
-    private $uriFactory;
-
-    /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
     private $tokenStorage;
+
+    /**
+     * @var \Psr\Http\Message\UriFactoryInterface
+     */
+    private $uriFactory;
 
     /**
      * CasGuardAuthenticator constructor.

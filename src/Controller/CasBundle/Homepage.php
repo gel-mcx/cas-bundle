@@ -11,8 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Homepage
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function __invoke()
     {
-        return new Response('You have been redirected here by default. Please update your configuration and replace <code>cas_bundle_homepage</code> with an existing route of your app.');
+        $body = <<< 'EOF'
+<p>You have been redirected here by default.</p>
+
+<p>Please update your configuration and replace <code>cas_bundle_homepage</code> with an existing route of your app.</p>
+EOF;
+
+        return new Response($body);
     }
 }
